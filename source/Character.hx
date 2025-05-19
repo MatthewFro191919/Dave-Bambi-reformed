@@ -104,6 +104,31 @@ class Character extends FlxSprite
 				nativelyPlayable = true;
 				flipX = true;
 
+			case 'eevee':
+				frames = Paths.getSparrowAtlas('eevee-mix/Playable_Eevee', 'shared');
+
+				animation.addByPrefix('idle', 'BF idle', 24, false);
+				animation.addByPrefix('singUP', 'BF up0', 24, false);
+				animation.addByPrefix('singLEFT', 'BF left0', 24, false);
+				animation.addByPrefix('singRIGHT', 'BF right0', 24, false);
+				animation.addByPrefix('singDOWN', 'BF down0', 24, false);
+				animation.addByPrefix('singUPmiss', 'BF upmiss', 24, false);
+				animation.addByPrefix('singLEFTmiss', 'BF leftmiss', 24, false);
+				animation.addByPrefix('singRIGHTmiss', 'BF rightmiss', 24, false);
+				animation.addByPrefix('singDOWNmiss', 'BF downmiss', 24, false);
+				animation.addByPrefix('hey', 'BF blush', 24, false);
+
+				loadOffsetFile(curCharacter);
+
+				skins.set('gfSkin', 'pika');
+
+				barColor = FlxColor.fromRGB(246, 228, 189);
+
+				playAnim('idle');
+				antialiasing = false;
+				nativelyPlayable = true;
+				flipX = true;
+
 			case 'bf-cool':
 				frames = Paths.getSparrowAtlas('characters/Cool_BF', 'shared');
 				
@@ -228,6 +253,19 @@ class Character extends FlxSprite
 				skins.set('3d', 'gf-3d');
 
 				barColor = FlxColor.fromString('#33de39');
+
+				playAnim('danceRight');
+			case 'pika':
+				// GIRLFRIEND CODE
+				frames = Paths.getSparrowAtlas('eevee-mix/Pikafriend', 'shared');
+
+				animation.addByPrefix('cheer', 'Pika cheer', 24, false);
+				animation.addByPrefix('danceLeft', 'Pika idleleft', 24, false);
+				animation.addByPrefix('danceRight', 'Pika idleright', 24, false);
+
+				loadOffsetFile(curCharacter);
+
+				barColor = FlxColor.fromRGB(255, 68, 70);
 
 				playAnim('danceRight');
 			case 'gf-bent':
