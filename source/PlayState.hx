@@ -1519,8 +1519,8 @@ class PlayState extends MusicBeatState
 				else credits = LanguageManager.getTextString('cheating_credit');
 			case 'exploitation':
 				if (!modchartoption) credits = LanguageManager.getTextString('exploitation_nomod_credit');
-				else credits = LanguageManager.getTextString('exploitation_credit') + " " + (!FlxG.save.data.selfAwareness ? CoolSystemStuff.getUsername() : ((shaggyVoice ? 'Shaggy' : boyfriend.curCharacter))) + "!";				else credits = LanguageManager.getTextString('exploitation_credit') + " " + (!FlxG.save.data.selfAwareness ? CoolSystemStuff.getUsername() : ((shaggyVoice ? 'Shaggy' : boyfriend.curCharacter))) + "!";
-				else credits = LanguageManager.getTextString('exploitation_credit') + " " + (!FlxG.save.data.selfAwareness ? CoolSystemStuff.getUsername() : ((eeveeVoice ? 'Shaggy' : boyfriend.curCharacter))) + "!";				else credits = LanguageManager.getTextString('exploitation_credit') + " " + (!FlxG.save.data.selfAwareness ? CoolSystemStuff.getUsername() : ((eeveeVoice ? 'Eevee' : boyfriend.curCharacter))) + "!";
+				else credits = LanguageManager.getTextString('exploitation_credit') + " " + (!FlxG.save.data.selfAwareness ? CoolSystemStuff.getUsername() : (shaggyVoice ? 'Shaggy' : 'Boyfriend')) + "!";
+				else credits = LanguageManager.getTextString('exploitation_credit') + " " + (!FlxG.save.data.selfAwareness ? CoolSystemStuff.getUsername() : (eeveeVoice ? 'Eevee' : 'Boyfriend')) + "!";
 			case 'kabunga':
 				credits = LanguageManager.getTextString('kabunga_credit');
 				case 'omission':
