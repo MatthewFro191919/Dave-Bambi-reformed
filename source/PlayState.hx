@@ -523,6 +523,9 @@ class PlayState extends MusicBeatState
 	var shy:Float;
 	var sh_r:Float = 60;
 
+	public static var eeveeVoice:Bool = false;
+	var isEevee:Bool = false;
+	
 	override public function create()
 	{
 		Paths.clearStoredMemory();
@@ -906,14 +909,18 @@ class PlayState extends MusicBeatState
 		{
 			gfVersion = SONG.gf;
 		}
+		if (formoverride == "eevee")
+		{
+			gfVersion = 'pika';
+		}
 		if (formoverride == "bf-pixel")
 		{
 			gfVersion = 'gf-pixel';
 		}
 		if (formoverride == "bf-3d")
-			{
-				gfVersion = 'gf-3d';
-			}
+		{
+			gfVersion = 'gf-3d';
+		}
 		if (SONG.player1 == 'bf-cool')
 		{
 			gfVersion = 'gf-cool';
@@ -1189,6 +1196,7 @@ class PlayState extends MusicBeatState
 		}
 		bfGroup.add(boyfriend);
 		isShaggy = boyfriend.curCharacter == 'shaggy' || boyfriend.curCharacter == 'supershaggy' || boyfriend.curCharacter == 'godshaggy' || boyfriend.curCharacter == 'redshaggy';
+                isEevee = boyfriend.curCharacter == 'eevee';
 
 		switch (stageCheck)
 		{
@@ -1336,6 +1344,8 @@ class PlayState extends MusicBeatState
 			'bonus-song', 'bonus-song-2.5', 'bot-trot', 'escape-from-california', 'adventure', 'mealie', 'indignancy', 'memory',
 			'roofs', 'supernovae', 'glitch', 'master', 'cheating', 'unfairness', 'kabunga', 'recursed', 'exploitation'
 		].contains(SONG.song.toLowerCase());
+
+		eeveeVoice = isEevee && ['interdimensional']
 
 		generateSong(SONG.song);
 
@@ -1509,7 +1519,8 @@ class PlayState extends MusicBeatState
 				else credits = LanguageManager.getTextString('cheating_credit');
 			case 'exploitation':
 				if (!modchartoption) credits = LanguageManager.getTextString('exploitation_nomod_credit');
-				else credits = LanguageManager.getTextString('exploitation_credit') + " " + (!FlxG.save.data.selfAwareness ? CoolSystemStuff.getUsername() : ((shaggyVoice ? 'Shaggy' : boyfriend.curCharacter))) + "!";
+				else credits = LanguageManager.getTextString('exploitation_credit') + " " + (!FlxG.save.data.selfAwareness ? CoolSystemStuff.getUsername() : ((shaggyVoice ? 'Shaggy' : boyfriend.curCharacter))) + "!";				else credits = LanguageManager.getTextString('exploitation_credit') + " " + (!FlxG.save.data.selfAwareness ? CoolSystemStuff.getUsername() : ((shaggyVoice ? 'Shaggy' : boyfriend.curCharacter))) + "!";
+				else credits = LanguageManager.getTextString('exploitation_credit') + " " + (!FlxG.save.data.selfAwareness ? CoolSystemStuff.getUsername() : ((eeveeVoice ? 'Shaggy' : boyfriend.curCharacter))) + "!";				else credits = LanguageManager.getTextString('exploitation_credit') + " " + (!FlxG.save.data.selfAwareness ? CoolSystemStuff.getUsername() : ((eeveeVoice ? 'Eevee' : boyfriend.curCharacter))) + "!";
 			case 'kabunga':
 				credits = LanguageManager.getTextString('kabunga_credit');
 				case 'omission':
@@ -3658,6 +3669,9 @@ class PlayState extends MusicBeatState
 			vocals = new FlxSound().loadEmbedded(Paths.voices(PlayState.SONG.song, localFunny == CharacterFunnyEffect.Tristan ? "-Tristan" : shaggyVoice ? "Shaggy" : ""));
 		} else {
 			vocals = new FlxSound();
+		}
+		if (isEevee && SONG.needsVoices) {
+			vocals = new FlxSound().loadEmbedded(Paths.voices(PlayState.SONG.song, localFunny == CharacterFunnyEffect.Tristan ? "-Tristan" : eeveeVoice ? "Eevee" : ""));
 		}
 
 		FlxG.sound.list.add(vocals);
@@ -6199,7 +6213,9 @@ class PlayState extends MusicBeatState
 						case 'Hurt Note':
 						var hitAnimation:Bool = boyfriend.animation.getByName("hit") != null;
 						boyfriend.playAnim(hitAnimation ? 'hit' : (isShaggy ? 'singDOWNmiss' : 'singRIGHTmiss'), true);
+						boyfriend.playAnim(hitAnimation ? 'hit' : (isEevee ? 'singDOWNmiss' : 'singRIGHTmiss'), true);
 						if (isShaggy) boyfriend.color = 0xFF840000;
+						if (isEevee) boyfriend.color = 0xFF840000;
 						return;
 						
 						default:
@@ -7972,7 +7988,9 @@ class PlayState extends MusicBeatState
 					case 'phone':
 						var hitAnimation:Bool = boyfriend.animation.getByName("hit") != null;
 						boyfriend.playAnim(hitAnimation ? 'hit' : (isShaggy ? 'singDOWNmiss' : 'singRIGHTmiss'), true);
+						boyfriend.playAnim(hitAnimation ? 'hit' : (isEevee ? 'singDOWNmiss' : 'singRIGHTmiss'), true);
 						if (isShaggy) boyfriend.color = 0xFF000084;
+						if (isEevee) boyfriend.color = 0xFF000084;
 						FlxTween.cancelTweensOf(note.MyStrum);
 						note.MyStrum.alpha = 0.01;
 						var noteTween = FlxTween.tween(note.MyStrum, {alpha: 1}, 7, {ease: FlxEase.expoIn});
@@ -8288,10 +8306,13 @@ class PlayState extends MusicBeatState
 					var Animation:Bool = boyfriend.animation.getByName("singSmash") != null;
 					var heyAnimation:Bool = boyfriend.animation.getByName("hey") != null;
 					boyfriend.playAnim(Animation ? 'singSmash' : (heyAnimation ? 'hey' : (isShaggy ? 'singRIGHT' : 'singUPmiss')), true);
+					boyfriend.playAnim(Animation ? 'singSmash' : (heyAnimation ? 'hey' : (isEevee ? 'singRIGHT' : 'singUPmiss')), true);
 					case 'Death Note':
 						var hitAnimation:Bool = boyfriend.animation.getByName("hit") != null;
 						boyfriend.playAnim(hitAnimation ? 'hit' : (isShaggy ? 'singDOWNmiss' : 'singRIGHTmiss'), true);
+						boyfriend.playAnim(hitAnimation ? 'hit' : (isEevee ? 'singDOWNmiss' : 'singRIGHTmiss'), true);
 						if (isShaggy) boyfriend.color = 0xFF840000; 
+					        if (isEevee) boyfriend.color = 0xFF840000; 
 						health -= note.isSustainNote ? 0.25 : 0.1; 
 						updateAccuracy(); 
 						
@@ -8299,6 +8320,7 @@ class PlayState extends MusicBeatState
 					var hitAnimation:Bool = boyfriend.animation.getByName("dodge") != null;
 					var heyAnimation:Bool = boyfriend.animation.getByName("hey") != null;
 					boyfriend.playAnim(hitAnimation ? 'dodge' : (heyAnimation ? 'hey' : (isShaggy ? 'singRIGHT' : 'singUPmiss')), true);
+					boyfriend.playAnim(hitAnimation ? 'dodge' : (heyAnimation ? 'hey' : (isEevee ? 'singRIGHT' : 'singUPmiss')), true);
 					gf.playAnim('cheer', true);
 					if (note.health != 2)
 					{
@@ -8433,6 +8455,14 @@ class PlayState extends MusicBeatState
 			}
 			bfGroup.add(boyfriend);
 		}
+		if (!isEevee) {
+			preRecursedSkin = (formoverride != 'none' && boyfriend.curCharacter == formoverride ? formoverride : boyfriend.curCharacter);
+			if (boyfriend.skins.exists('recursed'))
+			{
+				switchBF(boyfriend.skins.get('recursed'), boyfriend.getPosition());
+			}
+			bfGroup.add(boyfriend);
+		}
 		addRecursedUI();		
 	}
 	function addRecursedUI()
@@ -8493,6 +8523,7 @@ class PlayState extends MusicBeatState
 			remove(element);
 		}
 		if (!isShaggy) switchBF(preRecursedSkin, boyfriend.getPosition());
+		if (!isEevee) switchBF(preRecursedSkin, boyfriend.getPosition());
 		health = preRecursedHealth;
 	}
 	function initAlphabet(songList:Array<String>)
@@ -9107,7 +9138,6 @@ class PlayState extends MusicBeatState
 								shx = 770 + boyfriend.globalOffset[0];
 								shy = 450 + boyfriend.globalOffset[1];
 							}
-							
 							if (!isShaggy) {
 								for (char in [boyfriend, gf])
 								{
