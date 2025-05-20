@@ -1520,7 +1520,6 @@ class PlayState extends MusicBeatState
 			case 'exploitation':
 				if (!modchartoption) credits = LanguageManager.getTextString('exploitation_nomod_credit');
 				else credits = LanguageManager.getTextString('exploitation_credit') + " " + (!FlxG.save.data.selfAwareness ? CoolSystemStuff.getUsername() : (shaggyVoice ? 'Shaggy' : 'Boyfriend')) + "!";
-				else credits = LanguageManager.getTextString('exploitation_credit') + " " + (!FlxG.save.data.selfAwareness ? CoolSystemStuff.getUsername() : (eeveeVoice ? 'Eevee' : 'Boyfriend')) + "!";
 			case 'kabunga':
 				credits = LanguageManager.getTextString('kabunga_credit');
 				case 'omission':
