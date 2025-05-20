@@ -1345,7 +1345,7 @@ class PlayState extends MusicBeatState
 			'roofs', 'supernovae', 'glitch', 'master', 'cheating', 'unfairness', 'kabunga', 'recursed', 'exploitation'
 		].contains(SONG.song.toLowerCase());
 
-		eeveeVoice = isEevee && ['interdimensional']
+		eeveeVoice = isEevee && ['interdimensional'].contains(SONG.song.toLowerCase());
 
 		generateSong(SONG.song);
 
